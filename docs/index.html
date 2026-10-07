@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Waiting Tax — The Bull Brew</title>
+<meta name="description" content="What does waiting to buy a home actually cost? Rent burned, price appreciation, and the higher payment — one honest number.">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#110D18">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<style>
+:root{
+  --bg:#110D18; --surface:#1B1426; --surface2:#221B33; --velvet:#6B4A7A; --velvet-deep:#3A2B4E;
+  --line:#352A4D; --line-soft:#281F3C;
+  --text:#F1EBF5; --muted:#B3A6C9; --faint:#7E7194;
+  --gold:#C5A059; --gold-dim:#8A7440; --gold-soft:rgba(197,160,89,.12);
+  --bad:#C05A4E; --good:#9DBE7A;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{-webkit-text-size-adjust:100%;}
+body{background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; line-height:1.55; padding-bottom:64px;}
+.serif{font-family:Georgia,"Times New Roman",Times,serif;}
+.num{font-variant-numeric:tabular-nums; font-feature-settings:"tnum";}
+.wrap{max-width:1060px; margin:0 auto; padding:0 20px;}
+header.hero{padding:52px 0 10px; position:relative;}
+header.hero::before{content:""; position:absolute; top:-40px; left:50%; transform:translateX(-50%); width:720px; height:340px; max-width:100vw;
+  background:radial-gradient(ellipse at center, rgba(107,74,122,.28), transparent 65%); pointer-events:none;}
+.eyebrow{color:var(--gold); font-size:11px; letter-spacing:.26em; text-transform:uppercase; font-weight:600; position:relative;}
+h1{font-family:Georgia,"Times New Roman",serif; font-size:clamp(36px,6vw,58px); font-weight:700; line-height:1.06; margin:14px 0 12px; position:relative;}
+h1 .gold{color:var(--gold);}
+.lede{color:var(--muted); font-size:17px; max-width:660px; position:relative;}
+.lede strong{color:var(--text);}
+.steps{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:28px 0 8px;}
+.step{background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:18px 20px; box-shadow:0 18px 50px rgba(0,0,0,.45);}
+.step .n{font-family:Georgia,serif; font-size:26px; color:var(--gold);}
+.step .t{font-size:13.5px; color:var(--muted); margin-top:4px;}
+.step .t strong{color:var(--text);}
+@media(max-width:640px){.steps{grid-template-columns:1fr;}}
+h2.sec{font-family:Georgia,serif; font-size:23px; margin:40px 0 4px; padding-bottom:10px; border-bottom:1px solid var(--line);}
+h2.sec .rule{display:inline-block; width:28px; height:2px; background:var(--gold); vertical-align:middle; margin-right:10px;}
+.sub{color:var(--muted); font-size:13.5px; margin-bottom:16px;}
+.panel{background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:22px 24px; box-shadow:0 18px 50px rgba(0,0,0,.45);}
+.panel h3{font-family:Georgia,serif; font-size:17px; color:var(--gold); letter-spacing:.02em; margin-bottom:2px;}
+.panel .hint{font-size:12.5px; color:var(--muted); margin-bottom:16px;}
+.field{margin-bottom:16px;}
+.field label{display:flex; justify-content:space-between; font-size:13px; color:var(--muted); margin-bottom:6px; letter-spacing:.02em;}
+.field label .val{color:var(--gold); font-weight:700;}
+input[type=number],input[type=text],select{width:100%; background:var(--bg); border:1px solid var(--line); border-radius:8px; color:var(--text); font-size:16px; padding:10px 12px; font-variant-numeric:tabular-nums;}
+input[type=number]:focus,input[type=text]:focus,select:focus{outline:none; border-color:var(--gold);}
+input[type=range]{width:100%; accent-color:var(--gold); height:28px; cursor:pointer;}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+@media(max-width:720px){.grid2{grid-template-columns:1fr;}}
+.grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+@media(max-width:720px){.grid3{grid-template-columns:1fr;}}
+/* velvet highlighted panel */
+.velvet{background:linear-gradient(140deg,#2C2140 0%,#1B1426 70%); border:1px solid var(--velvet); border-radius:10px; padding:26px 28px; box-shadow:0 18px 50px rgba(0,0,0,.5), inset 0 1px 0 rgba(197,160,89,.15);}
+/* verdict pull-quote */
+.verdict{margin-top:24px;}
+.verdict .quote{font-family:Georgia,serif; font-style:italic; font-size:clamp(19px,2.6vw,25px); line-height:1.5; color:var(--text);}
+.verdict .quote::before{content:"\201C"; display:block; font-size:52px; line-height:.6; color:var(--gold); margin-bottom:10px; font-style:normal;}
+.verdict .by{margin-top:14px; font-size:12px; letter-spacing:.22em; text-transform:uppercase; color:var(--gold);}
+/* hero tax number */
+.taxhero{margin-top:24px; text-align:center; padding:34px 24px;}
+.taxhero .k{font-size:11px; letter-spacing:.28em; text-transform:uppercase; color:var(--muted);}
+.taxhero .v{font-family:Georgia,serif; font-size:clamp(44px,8vw,76px); color:var(--gold); margin:8px 0 4px; text-shadow:0 4px 30px rgba(197,160,89,.25);}
+.taxhero .note{font-size:13.5px; color:var(--muted); max-width:560px; margin:0 auto;}
+.taxhero .note strong{color:var(--text);}
+/* stat cards */
+.stats{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:20px;}
+@media(max-width:900px){.stats{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:480px){.stats{grid-template-columns:1fr;}}
+.stat{background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:18px 20px; box-shadow:0 18px 50px rgba(0,0,0,.45);}
+.stat .k{font-size:10.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted);}
+.stat .v{font-family:Georgia,serif; font-size:27px; color:var(--gold); margin-top:6px;}
+.stat .v .vel{color:var(--text);}
+.stat .d{font-size:12.5px; color:var(--faint); margin-top:6px;}
+.rowline{display:flex; justify-content:space-between; align-items:baseline; gap:12px; padding:10px 0; border-top:1px solid var(--line-soft); font-size:14px;}
+.rowline:first-of-type{border-top:none;}
+.rowline .k{color:var(--muted);}
+.rowline .v{font-weight:700; text-align:right;}
+.rowline .v.gold{color:var(--gold);}
+.rowline .v.bad{color:var(--bad);}
+.rowline .v.good{color:var(--good);}
+/* buttons */
+.btn{display:inline-block; border:none; cursor:pointer; font-size:15px; font-weight:700; letter-spacing:.03em; padding:13px 26px; border-radius:8px; background:linear-gradient(180deg,#D8B76E,#B28A45); color:#171021; box-shadow:0 10px 30px rgba(197,160,89,.25);}
+.btn:hover{filter:brightness(1.06);}
+.btn.ghost{background:transparent; border:1px solid var(--velvet); color:var(--text); box-shadow:none;}
+.btn.ghost:hover{border-color:var(--gold);}
+.btn.small{padding:9px 16px; font-size:13px;}
+.btnrow{display:flex; gap:12px; flex-wrap:wrap; margin-top:18px;}
+/* table */
+table{width:100%; border-collapse:collapse; font-size:13.5px; margin-top:6px;}
+th{font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--faint); text-align:right; padding:10px 8px; border-bottom:1px solid var(--line); font-weight:600;}
+th:first-child,td:first-child{text-align:left;}
+td{padding:10px 8px; border-bottom:1px solid var(--line-soft); text-align:right; font-variant-numeric:tabular-nums;}
+td.gold{color:var(--gold); font-weight:700;}
+tr:last-child td{border-bottom:none;}
+.tblwrap{overflow-x:auto;}
+/* chart */
+.chartbox{margin-top:6px;}
+canvas#chart{width:100%; height:300px; display:block;}
+.legend{display:flex; gap:18px; flex-wrap:wrap; margin-top:10px; font-size:12.5px; color:var(--muted);}
+.legend .sw{display:inline-block; width:12px; height:12px; border-radius:3px; margin-right:6px; vertical-align:-1px;}
+/* explainer */
+.explain{font-size:13.5px; color:var(--muted); background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:18px 22px; margin-top:18px;}
+.explain strong{color:var(--gold);}
+.explain ul{margin:8px 0 0 18px;}
+.explain li{margin-bottom:6px;}
+.explain li::marker{color:var(--gold);}
+/* scenarios */
+.scen{border:1px solid var(--line); border-radius:10px; padding:16px 18px; margin-top:12px; background:var(--surface2);}
+.scen .nm{font-family:Georgia,serif; font-size:16px; color:var(--text);}
+.scen .meta{font-size:12.5px; color:var(--muted); margin-top:4px;}
+.scen .acts{margin-top:10px; display:flex; gap:8px;}
+.linkbtn{background:none; border:none; color:var(--gold); cursor:pointer; font-size:13px; text-decoration:underline; padding:0;}
+.linkbtn.del{color:var(--bad);}
+footer{margin-top:48px; padding-top:20px; border-top:1px solid var(--line); font-size:12.5px; color:var(--faint); text-align:center;}
+footer .brand{font-family:Georgia,serif; color:var(--gold); letter-spacing:.18em; font-size:12px; text-transform:uppercase;}
+.hidden{display:none !important;}
+.copyok{color:var(--good); font-size:13px; margin-top:10px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">The Bull Brew &middot; Daily Tool</div>
+  <h1>The <span class="gold">Waiting Tax</span></h1>
+  <p class="lede">"I'll buy when the time is right." Fair. But hesitation has a price tag, and nobody hands you the receipt. This tool adds up <strong>rent burned</strong>, <strong>price appreciation</strong>, and the <strong>heavier payment</strong> waiting buys you &mdash; minus what your down payment earns while it sits. One number. Eyes open.</p>
+  <div class="steps">
+    <div class="step"><div class="n">1</div><div class="t"><strong>Plug in your numbers.</strong> Rent, price, rate, and how long you're thinking of waiting.</div></div>
+    <div class="step"><div class="n">2</div><div class="t"><strong>Read the meter.</strong> The tax accrues every single day you wait &mdash; see the daily burn.</div></div>
+    <div class="step"><div class="n">3</div><div class="t"><strong>Decide like an investor.</strong> Buy now, or wait &mdash; but wait for a reason, not a mood.</div></div>
+  </div>
+</header>
+
+<h2 class="sec"><span class="rule"></span>Your numbers</h2>
+<p class="sub">Everything updates live. Be honest with the appreciation number &mdash; that's where the tax hides.</p>
+<div class="grid2">
+  <div class="panel">
+    <h3>Today</h3>
+    <div class="hint">What the world looks like right now.</div>
+    <div class="field"><label>Monthly rent now <span class="val" id="v_rent"></span></label>
+      <input type="number" id="in_rent" value="2400" min="0" step="50"></div>
+    <div class="field"><label>Target home price <span class="val" id="v_price"></span></label>
+      <input type="number" id="in_price" value="450000" min="0" step="5000"></div>
+    <div class="field"><label>Mortgage rate you can get <span class="val" id="v_rate">6.5%</span></label>
+      <input type="range" id="in_rate" min="3" max="10" step="0.125" value="6.5"></div>
+    <div class="field"><label>Down payment <span class="val" id="v_dp">10%</span></label>
+      <input type="range" id="in_dp" min="3" max="40" step="1" value="10"></div>
+  </div>
+  <div class="panel">
+    <h3>The wait</h3>
+    <div class="hint">What you expect while you sit on the fence.</div>
+    <div class="field"><label>Years you'll wait <span class="val" id="v_years">2 yrs</span></label>
+      <input type="range" id="in_years" min="0" max="7" step="1" value="2"></div>
+    <div class="field"><label>Home price growth / year <span class="val" id="v_appr">4.0%</span></label>
+      <input type="range" id="in_appr" min="-2" max="10" step="0.25" value="4"></div>
+    <div class="field"><label>Rent growth / year <span class="val" id="v_rentg">3.5%</span></label>
+      <input type="range" id="in_rentg" min="0" max="8" step="0.25" value="3.5"></div>
+    <div class="field"><label>Rate shift while you wait <span class="val" id="v_rshift">+0.00%</span></label>
+      <input type="range" id="in_rshift" min="-2" max="3" step="0.125" value="0">
+      <div class="hint" style="margin:6px 0 0;">Rates could fall (negative) or climb (positive) by the time you buy.</div></div>
+    <div class="field"><label>Down-payment savings yield / year <span class="val" id="v_yield">4.0%</span></label>
+      <input type="range" id="in_yield" min="0" max="8" step="0.25" value="4"></div>
+  </div>
+</div>
+
+<h2 class="sec"><span class="rule"></span>The verdict</h2>
+<div class="velvet verdict">
+  <div class="quote" id="verdict_text"></div>
+  <div class="by" id="verdict_by"></div>
+</div>
+
+<div class="velvet taxhero">
+  <div class="k">Total waiting tax</div>
+  <div class="v num" id="tax_total">$0</div>
+  <div class="note" id="tax_note"></div>
+</div>
+
+<div class="stats">
+  <div class="stat"><div class="k">Rent you'll burn</div><div class="v num" id="s_rent">$0</div><div class="d" id="s_rent_d"></div></div>
+  <div class="stat"><div class="k">Home price later</div><div class="v num" id="s_price">$0</div><div class="d" id="s_price_d"></div></div>
+  <div class="stat"><div class="k">Payment later vs now</div><div class="v num" id="s_pmt">$0</div><div class="d" id="s_pmt_d"></div></div>
+  <div class="stat"><div class="k">Cost per day of waiting</div><div class="v num" id="s_day">$0</div><div class="d" id="s_day_d"></div></div>
+</div>
+
+<h2 class="sec"><span class="rule"></span>Where the tax comes from</h2>
+<p class="sub">Three charges on the invoice, one credit back.</p>
+<div class="grid2">
+  <div class="panel">
+    <h3>The charges</h3>
+    <div class="hint">What waiting costs you.</div>
+    <div class="rowline"><span class="k">Rent paid while waiting</span><span class="v bad num" id="d_rent">$0</span></div>
+    <div class="rowline"><span class="k">Price appreciation you absorb</span><span class="v bad num" id="d_appr">$0</span></div>
+    <div class="rowline"><span class="k">Extra cash needed for the same down payment</span><span class="v bad num" id="d_down">$0</span></div>
+    <div class="rowline"><span class="k">Extra interest, first 10 years</span><span class="v bad num" id="d_int">$0</span></div>
+  </div>
+  <div class="panel">
+    <h3>The credit</h3>
+    <div class="hint">The one thing waiting gives back.</div>
+    <div class="rowline"><span class="k">Down payment growth while parked</span><span class="v good num" id="d_growth">$0</span></div>
+    <div class="rowline"><span class="k">Loan you'd take now</span><span class="v num" id="d_loan0">$0</span></div>
+    <div class="rowline"><span class="k">Loan you'd take later</span><span class="v num" id="d_loanN">$0</span></div>
+    <div class="rowline"><span class="k">Monthly P&amp;I now &rarr; later</span><span class="v gold num" id="d_pmt">$0</span></div>
+  </div>
+</div>
+
+<h2 class="sec"><span class="rule"></span>The meter, year by year</h2>
+<p class="sub">Cumulative rent burned (velvet) vs. cumulative price appreciation (gold) as the wait stretches on.</p>
+<div class="panel chartbox">
+  <canvas id="chart"></canvas>
+  <div class="legend">
+    <span><span class="sw" style="background:#6B4A7A;"></span>Cumulative rent burned</span>
+    <span><span class="sw" style="background:#C5A059;"></span>Cumulative price appreciation</span>
+  </div>
+</div>
+<div class="panel" style="margin-top:16px;">
+  <div class="tblwrap"><table id="ytable">
+    <thead><tr><th>Year</th><th>Rent that year</th><th>Rent burned so far</th><th>Home price</th><th>Tax so far</th></tr></thead>
+    <tbody></tbody>
+  </table></div>
+</div>
+
+<div class="explain" id="honesty">
+  <strong>Intellectual honesty, because the tax isn't always guilty.</strong> Waiting is the right call when:
+  <ul>
+    <li>You <strong>don't have the down payment yet</strong> &mdash; buying with 3% down and PMI you can't afford is worse than waiting a year.</li>
+    <li>Waiting one more year gets you to <strong>20% down and kills PMI</strong> &mdash; run both scenarios and compare.</li>
+    <li>Your <strong>job, city, or life is genuinely uncertain</strong> &mdash; a house is an anchor; don't drop it in a storm.</li>
+    <li>You're <strong>repairing credit</strong> &mdash; a 1% better rate from a cleaner score can outweigh a year of appreciation.</li>
+  </ul>
+  Waiting is the wrong call when the reason is a <strong>vibe</strong> &mdash; "the market feels high," "maybe rates drop," "I'll know when I know." The meter doesn't care about vibes.
+</div>
+
+<h2 class="sec"><span class="rule"></span>Save scenarios</h2>
+<p class="sub">Compare "buy now" against different wait lengths, or park your what-ifs.</p>
+<div class="panel">
+  <div class="field"><label>Scenario name</label>
+    <input type="text" id="scen_name" placeholder="e.g. Wait 2 years at 4% appreciation"></div>
+  <div class="btnrow" style="margin-top:0;">
+    <button class="btn small" id="btn_save">Save this scenario</button>
+    <button class="btn small ghost" id="btn_copy">Copy summary</button>
+  </div>
+  <div class="copyok hidden" id="copy_ok">Copied to clipboard.</div>
+  <div id="scen_list"></div>
+</div>
+
+<footer>
+  <div class="brand">The Bull Brew</div>
+  <div style="margin-top:8px;">Estimates only &mdash; P&amp;I on a 30-year fixed, taxes and insurance not included. Not financial advice. Everything runs in your browser; nothing leaves your device.</div>
+</footer>
+
+</div>
+<script>
+"use strict";
+function $(id){ return document.getElementById(id); }
+function money(x){
+  var neg = x < 0, v = Math.abs(Math.round(x));
+  return (neg ? "-$" : "$") + v.toLocaleString("en-US");
+}
+function money2(x){
+  var neg = x < 0, v = Math.abs(x);
+  var s = v.toLocaleString("en-US",{minimumFractionDigits:2, maximumFractionDigits:2});
+  return (neg ? "-$" : "$") + s;
+}
+function pct(x, d){ return (x).toFixed(d === undefined ? 2 : d) + "%"; }
+function clamp(v,a,b){ return Math.max(a, Math.min(b, v)); }
+
+function monthlyPI(principal, annualRatePct, years){
+  years = years || 30;
+  var r = annualRatePct/100/12, n = years*12;
+  if (r <= 0) return principal/n;
+  var f = Math.pow(1+r, n);
+  return principal * r * f / (f-1);
+}
+// total interest paid over first `months` payments
+function interestFirst(principal, annualRatePct, months){
+  var r = annualRatePct/100/12, n = 360;
+  var pmt = monthlyPI(principal, annualRatePct, 30);
+  var bal = principal, tot = 0;
+  for (var i=0; i<months; i++){
+    var intr = bal*r;
+    tot += intr;
+    bal -= (pmt - intr);
+    if (bal <= 0) break;
+  }
+  return tot;
+}
+
+var INPUTS = [
+  ["in_rent","v_rent", function(v){ return money(v)+"/mo"; }],
+  ["in_price","v_price", money],
+  ["in_rate","v_rate", function(v){ return pct(v); }],
+  ["in_dp","v_dp", function(v){ return v+"%"; }],
+  ["in_years","v_years", function(v){ return v + (v==1?" yr":" yrs"); }],
+  ["in_appr","v_appr", function(v){ return pct(v); }],
+  ["in_rentg","v_rentg", function(v){ return pct(v); }],
+  ["in_rshift","v_rshift", function(v){ return (v>=0?"+":"")+pct(v); }],
+  ["in_yield","v_yield", function(v){ return pct(v); }]
+];
+function readInputs(){
+  function num(id){ var v = parseFloat($(id).value); return isNaN(v) ? 0 : v; }
+  return {
+    rent: Math.max(0, num("in_rent")),
+    price: Math.max(0, num("in_price")),
+    rate: clamp(num("in_rate"), 0.5, 15),
+    dpPct: clamp(num("in_dp"), 0, 60),
+    years: clamp(Math.round(num("in_years")), 0, 10),
+    appr: num("in_appr"),
+    rentg: Math.max(0, num("in_rentg")),
+    rshift: num("in_rshift"),
+    yieldPct: Math.max(0, num("in_yield"))
+  };
+}
+function refreshLabels(){
+  INPUTS.forEach(function(p){
+    var v = parseFloat($(p[0]).value);
+    if (isNaN(v)) v = 0;
+    $(p[1]).textContent = p[2](v);
+  });
+}
+
+function compute(p){
+  var N = p.years;
+  var down0 = p.price * p.dpPct/100;
+  var loan0 = p.price - down0;
+  var pi0 = monthlyPI(loan0, p.rate, 30);
+  // rent burned + price path per year
+  var rentCum = 0, rentByYear = [], priceByYear = [], taxByYear = [];
+  var price = p.price;
+  for (var y=1; y<=Math.max(N,1); y++){
+    var rentThisYear = 12 * p.rent * Math.pow(1 + p.rentg/100, y-1);
+    if (y <= N) rentCum += rentThisYear;
+    price = p.price * Math.pow(1 + p.appr/100, y);
+    var downGrown = down0 * Math.pow(1 + p.yieldPct/100, y);
+    var taxY = rentCum + (price - p.price) - (downGrown - down0);
+    rentByYear.push({year:y, rent: y<=N ? rentThisYear : 0, rentCum: y<=N ? rentCum : rentCum, price:price, tax: y<=N ? taxY : taxY});
+  }
+  var priceN = p.price * Math.pow(1 + p.appr/100, N);
+  var downN = priceN * p.dpPct/100;
+  var loanN = priceN - downN;
+  var rateN = Math.max(0.5, p.rate + p.rshift);
+  var piN = monthlyPI(loanN, rateN, 30);
+  var downGrownN = down0 * Math.pow(1 + p.yieldPct/100, N);
+  var tax = rentCum + (priceN - p.price) - (downGrownN - down0);
+  var int0 = interestFirst(loan0, p.rate, 120);
+  var intN = interestFirst(loanN, rateN, 120);
+  return {
+    N:N, down0:down0, loan0:loan0, pi0:pi0,
+    rentCum:rentCum, priceN:priceN, downN:downN, loanN:loanN,
+    rateN:rateN, piN:piN, pmtDelta:piN-pi0,
+    growth: downGrownN - down0, tax:tax,
+    intDelta: intN - int0,
+    perDay: N>0 ? tax/(N*365) : 0,
+    apprTotal: priceN - p.price,
+    extraDown: downN - down0,
+    rentByYear: rentByYear
+  };
+}
+
+function render(){
+  refreshLabels();
+  var p = readInputs(), r = compute(p);
+  // verdict
+  var vq = "", by = "";
+  if (r.N === 0){
+    vq = "Nothing to decide \u2014 you're buying now. The tax is zero because the meter never started.";
+    by = "The Waiting Tax";
+  } else if (r.tax <= 0){
+    vq = "Plot twist: in your scenario, waiting pays you. Prices are flat or falling, or your down payment earns more parked than the market takes. Take your time \u2014 but re-run this the moment the market turns.";
+    by = "The rare free wait";
+  } else {
+    var rel = p.price > 0 ? r.tax/p.price : 0;
+    var strong = rel >= 0.12 || r.pmtDelta >= 600;
+    if (strong){
+      vq = "The market is charging you serious rent for hesitating: " + money(r.tax) + " over " + r.N + (r.N==1?" year":" years") + ", about " + money(r.perDay) + " every single day. Wait only if you have a concrete reason \u2014 a bigger down payment, a cleaner credit score, a real plan. Vibes don't beat this meter.";
+      by = "Buy when ready \u2014 but know the price of \u2018ready\u2019";
+    } else {
+      vq = "Waiting costs you " + money(r.tax) + " over " + r.N + (r.N==1?" year":" years") + " \u2014 real money, but not ruinous. If the wait buys you something concrete (20% down, no PMI, certainty about the city), it can still be the smart trade. Just don't pretend it's free.";
+      by = "An honest, priced wait";
+    }
+  }
+  $("verdict_text").textContent = vq;
+  $("verdict_by").textContent = by;
+  // hero
+  $("tax_total").textContent = money(r.tax);
+  $("tax_note").innerHTML = r.N === 0
+    ? "No wait, no tax."
+    : "That's <strong>" + money(r.rentCum) + "</strong> in rent burned, plus <strong>" + money(r.apprTotal) + "</strong> of price appreciation, minus <strong>" + money(r.growth) + "</strong> your down payment earned while parked.";
+  // stats
+  $("s_rent").textContent = money(r.rentCum);
+  $("s_rent_d").textContent = r.N>0 ? money(r.rentCum/r.N) + " per year, on average" : "no wait";
+  $("s_price").textContent = money(r.priceN);
+  $("s_price_d").textContent = (r.apprTotal>=0?"+":"") + money(r.apprTotal) + " vs today";
+  $("s_pmt").innerHTML = money(r.piN) + ' <span class="vel" style="font-size:15px;">vs ' + money(r.pi0) + '</span>';
+  $("s_pmt_d").textContent = (r.pmtDelta>=0?"+":"") + money(r.pmtDelta) + "/mo " + (r.pmtDelta>=0?"heavier":"lighter");
+  $("s_day").textContent = r.N>0 ? money(r.perDay) : "$0";
+  $("s_day_d").textContent = r.N>0 ? "every day you wait" : "no wait";
+  // detail rows
+  $("d_rent").textContent = money(r.rentCum);
+  $("d_appr").textContent = (r.apprTotal>=0?"+":"") + money(r.apprTotal);
+  $("d_down").textContent = (r.extraDown>=0?"+":"") + money(r.extraDown);
+  $("d_int").textContent = (r.intDelta>=0?"+":"") + money(r.intDelta);
+  $("d_growth").textContent = "+" + money(r.growth);
+  $("d_loan0").textContent = money(r.loan0);
+  $("d_loanN").textContent = money(r.loanN);
+  $("d_pmt").textContent = money(r.pi0) + " \u2192 " + money(r.piN);
+  renderTable(p, r);
+  drawChart(p, r);
+  window.__last = {p:p, r:r};
+}
+
+function renderTable(p, r){
+  var tb = $("ytable").querySelector("tbody");
+  tb.innerHTML = "";
+  if (r.N === 0){
+    var tr = document.createElement("tr");
+    tr.innerHTML = "<td colspan='5' style='text-align:center; color:var(--faint);'>Set the wait to at least 1 year to see the meter run.</td>";
+    tb.appendChild(tr);
+    return;
+  }
+  r.rentByYear.slice(0, r.N).forEach(function(row){
+    var tr = document.createElement("tr");
+    tr.innerHTML = "<td>Year " + row.year + "</td><td>" + money(row.rent) + "</td><td>" +
+      money(row.rentCum) + "</td><td>" + money(row.price) + "</td>" +
+      '<td class="gold">' + money(row.tax) + "</td>";
+    tb.appendChild(tr);
+  });
+}
+function drawChart(p, r){
+  var cv = $("chart");
+  var dpr = window.devicePixelRatio || 1;
+  var W = cv.clientWidth, H = 300;
+  cv.width = W*dpr; cv.height = H*dpr;
+  var ctx = cv.getContext("2d");
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0,0,W,H);
+  var padL = 64, padR = 14, padT = 18, padB = 30;
+  var rows = r.rentByYear.slice(0, Math.max(r.N,1));
+  var maxV = 1;
+  rows.forEach(function(row){
+    maxV = Math.max(maxV, row.rentCum, Math.max(0, row.price - p.price));
+  });
+  maxV *= 1.12;
+  function y(v){ return padT + (H-padT-padB) * (1 - v/maxV); }
+  // gridlines + y labels
+  ctx.font = "11px -apple-system, sans-serif";
+  ctx.fillStyle = "#7E7194";
+  ctx.strokeStyle = "#281F3C";
+  ctx.lineWidth = 1;
+  for (var g=0; g<=4; g++){
+    var gv = maxV*g/4, gy = y(gv);
+    ctx.beginPath(); ctx.moveTo(padL, gy); ctx.lineTo(W-padR, gy); ctx.stroke();
+    ctx.textAlign = "right";
+    ctx.fillText("$" + Math.round(gv/1000) + "k", padL-8, gy+4);
+  }
+  var n = rows.length;
+  var slot = (W-padL-padR)/n;
+  var bw = Math.min(44, slot*0.28);
+  rows.forEach(function(row, i){
+    var cx = padL + slot*(i+0.5);
+    // rent bar (velvet)
+    var rh = (H-padT-padB) * (row.rentCum/maxV);
+    ctx.fillStyle = "#6B4A7A";
+    ctx.fillRect(cx-bw-3, H-padB-rh, bw, rh);
+    // appreciation bar (gold)
+    var av = Math.max(0, row.price - p.price);
+    var ah = (H-padT-padB) * (av/maxV);
+    ctx.fillStyle = "#C5A059";
+    ctx.fillRect(cx+3, H-padB-ah, bw, ah);
+    ctx.fillStyle = "#B3A6C9";
+    ctx.textAlign = "center";
+    ctx.fillText("Yr " + row.year, cx, H-padB+18);
+  });
+  if (r.N === 0){
+    ctx.fillStyle = "#B3A6C9"; ctx.textAlign = "center";
+    ctx.font = "14px Georgia, serif"; ctx.fontStyle = "italic";
+    ctx.fillText("Set the wait above zero and the meter starts running.", W/2, H/2);
+  }
+}
+
+/* ---- scenarios (localStorage) ---- */
+var LSKEY = "wt-scenarios-v1";
+function loadScens(){
+  try { return JSON.parse(localStorage.getItem(LSKEY)) || []; }
+  catch(e){ return []; }
+}
+function saveScens(a){ localStorage.setItem(LSKEY, JSON.stringify(a)); }
+function renderScens(){
+  var list = $("scen_list");
+  list.innerHTML = "";
+  var scens = loadScens();
+  if (!scens.length){
+    var d = document.createElement("div");
+    d.style.cssText = "color:var(--faint); font-size:13px; margin-top:12px;";
+    d.textContent = "No saved scenarios yet. Dial in a what-if and save it here.";
+    list.appendChild(d);
+    return;
+  }
+  scens.forEach(function(s, i){
+    var d = document.createElement("div");
+    d.className = "scen";
+    d.innerHTML = '<div class="nm"></div><div class="meta"></div><div class="acts"></div>';
+    d.querySelector(".nm").textContent = s.name;
+    d.querySelector(".meta").textContent =
+      "Wait " + s.p.years + "y \u00b7 " + money(s.p.price) + " \u00b7 " + pct(s.p.appr) + " appr \u00b7 tax " + money(s.r.tax) +
+      " \u00b7 " + money(s.r.pi0) + " \u2192 " + money(s.r.piN) + "/mo";
+    var acts = d.querySelector(".acts");
+    var lb = document.createElement("button");
+    lb.className = "linkbtn"; lb.textContent = "Load";
+    lb.onclick = function(){
+      Object.keys(s.p).forEach(function(k){
+        var map = {rent:"in_rent", price:"in_price", rate:"in_rate", dpPct:"in_dp", years:"in_years", appr:"in_appr", rentg:"in_rentg", rshift:"in_rshift", yieldPct:"in_yield"};
+        if (map[k] && $(map[k])) $(map[k]).value = s.p[k];
+      });
+      render();
+      window.scrollTo({top:0, behavior:"smooth"});
+    };
+    var db = document.createElement("button");
+    db.className = "linkbtn del"; db.textContent = "Delete";
+    db.onclick = function(){
+      var a = loadScens(); a.splice(i,1); saveScens(a); renderScens();
+    };
+    acts.appendChild(lb); acts.appendChild(db);
+    list.appendChild(d);
+  });
+}
+function summaryText(){
+  var p = window.__last.p, r = window.__last.r;
+  var L = [];
+  L.push("THE WAITING TAX \u2014 what waiting " + r.N + (r.N==1?" year":" years") + " to buy costs");
+  L.push("Home today: " + money(p.price) + " | Rent now: " + money(p.rent) + "/mo | Rate: " + pct(p.rate));
+  L.push("Assumptions: " + pct(p.appr) + "/yr appreciation, " + pct(p.rentg) + "/yr rent growth, " +
+    (p.rshift>=0?"+":"") + pct(p.rshift) + " rate shift, " + pct(p.yieldPct) + " down-payment yield");
+  L.push("");
+  L.push("TOTAL WAITING TAX: " + money(r.tax) + (r.N>0 ? " (" + money(r.perDay) + "/day)" : ""));
+  L.push("- Rent burned: " + money(r.rentCum));
+  L.push("- Price appreciation absorbed: " + (r.apprTotal>=0?"+":"") + money(r.apprTotal));
+  L.push("- Extra down-payment cash needed: " + (r.extraDown>=0?"+":"") + money(r.extraDown));
+  L.push("- Down-payment growth (credit): +" + money(r.growth));
+  L.push("- Monthly P&I: " + money(r.pi0) + " now \u2192 " + money(r.piN) + " later (" +
+    (r.pmtDelta>=0?"+":"") + money(r.pmtDelta) + "/mo)");
+  L.push("- Extra interest, first 10 yrs: " + (r.intDelta>=0?"+":"") + money(r.intDelta));
+  L.push("");
+  L.push("Built with The Bull Brew daily tools. Estimates only, not financial advice.");
+  return L.join("\n");
+}
+
+/* ---- init ---- */
+INPUTS.forEach(function(pair){
+  $(pair[0]).addEventListener("input", render);
+});
+$("btn_save").addEventListener("click", function(){
+  var name = $("scen_name").value.trim() || ("Scenario " + (loadScens().length+1));
+  var a = loadScens();
+  a.push({name:name, p:window.__last.p, r:{tax:window.__last.r.tax, pi0:window.__last.r.pi0, piN:window.__last.r.piN}});
+  saveScens(a);
+  $("scen_name").value = "";
+  renderScens();
+});
+$("btn_copy").addEventListener("click", function(){
+  var t = summaryText();
+  function done(){ $("copy_ok").classList.remove("hidden"); setTimeout(function(){ $("copy_ok").classList.add("hidden"); }, 2500); }
+  if (navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(t).then(done).catch(function(){ fallback(); });
+  } else { fallback(); }
+  function fallback(){
+    var ta = document.createElement("textarea");
+    ta.value = t; document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); done(); } catch(e){}
+    document.body.removeChild(ta);
+  }
+});
+window.addEventListener("resize", function(){ if (window.__last) drawChart(window.__last.p, window.__last.r); });
+renderScens();
+render();
+</script>
+</body>
+</html>
